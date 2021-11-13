@@ -1,0 +1,33 @@
+---
+- name: "[RUN CHECKS ON LOCALHOST]"
+  hosts: localhost
+  vars:
+    varsfile: "default_vars_files/default_mc_vars.yml"
+  vars_files:
+    - "{{ varsfile }}"
+  roles:
+    - checks
+
+- name: "[SETUP: Minecraft Vanilla - Server] Start playbook"
+  hosts: "{{ host }}"
+  vars:
+    varsfile: "default_vars_files/default_mc_vars.yml"
+  vars_files:
+    - "{{ varsfile }}"
+  become: yes
+  tasks:
+    - import_role:
+        name: preparations
+      tags:
+        - preparations
+
+    - import_role:
+        name: setup
+      tags:
+        - setup
+
+    - import_role:
+        name: mc_service
+      tags:
+        - service
+

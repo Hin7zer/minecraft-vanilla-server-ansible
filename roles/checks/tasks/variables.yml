@@ -1,0 +1,19 @@
+- name: "[CHECK] Variable host"
+  fail:
+    msg: "The following variable needs to be defined: host"
+  when: host is undefined 
+
+#- name: "[CHECK] Variable mc_service.name"
+#  fail:
+#    msg: "The following variable(s) needs to be defined: mc_service"
+#  when: mc_service.name is undefined 
+
+- name: "[CHECK] Variable mc_server.version"
+  fail:
+    msg: "The following variable needs to be defined: mc_server.version"
+  when: mc_server.version is undefined
+
+
+- name: "[CHECK] Variable service_cmd - SET service_cmd to '/run/mc_service.name/console'"
+  set_fact:
+    service_cmd: "/run/{{ mc_service.name }}/console"

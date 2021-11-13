@@ -1,0 +1,23 @@
+
+
+- name: "[INSTALLATION] Change owner of downloaded file"
+  file:
+    path: "{{ full_file_path | default('/home/' + user.name + '/mc_vanilla_server-' + mc_version + '.jar', true) }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group | default(user.name, true) }}"
+
+- name: "[INSTALLATION] Template server properties file"
+  template:
+    src: "{{ mc_service.src_conf | default('initial_server.properties.j2', true) }}"
+    dest: "{{ mc_service.dir | default('/home/' + user.name + '/', true) }}server.properties"
+    owner: "{{ user.name }}"
+    group: "{{ user.group | default(user.name, true) }}"
+    mode: '0644'
+
+- name: "[INSTALLATION] Template eula file"
+  template:
+    src: "{{ eula_file | default('eula.j2', true) }}"
+    dest: "{{ mc_service.dir | default('/home/' + user.name + '/', true) }}eula.txt"
+    owner: "{{ user.name }}"
+    group: "{{ user.group | default(user.name, true) }}"
+    mode: '0644'

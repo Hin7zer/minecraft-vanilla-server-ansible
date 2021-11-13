@@ -1,0 +1,3 @@
+- name: "[CHECK] Include variables.yml"
+  include_tasks: variables.yml
+#  tags:

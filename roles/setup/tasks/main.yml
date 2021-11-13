@@ -1,0 +1,22 @@
+ 
+- name: "[INSTALLATION-MAIN] Set version variable if != latest"
+  set_fact:
+    mc_version: "{{mc_server.version}}"
+  when: mc_server.version != "latest"
+
+- name: "[INSTALLATION] Include version.yml"
+  include_tasks: version.yml
+#  when: mc_server.version is defined and mc_server.version != "" and download == "on"
+#  tags:
+
+- name: "[INSTALLATION-MAIN] Set Variable full_file_path"
+  set_fact:
+    full_file_path: "{{mc_service.dir | default('/home/' + user.name + '/', true) }}{{ mc_service.file_name | default('mc_vanilla_server-' + mc_version + '.jar', true) }}"
+
+- name: "[INSTALLATION] Include download.yml"
+  include_tasks: download.yml
+#  tags:
+
+- name: "[INSTALLATION] Include setup.yml"
+  include_tasks: setup.yml
+#  tags:

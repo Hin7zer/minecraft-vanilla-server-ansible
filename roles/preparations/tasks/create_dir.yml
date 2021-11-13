@@ -1,0 +1,7 @@
+- name: "[PREPARATIONS] Create directory if selected"
+  file:
+    path: "{{mc_service.dir}}"
+    state: directory
+    recurse: yes
+    owner: "{{user.name}}"
+    group: "{{user.group | default(user.name, true) }}"

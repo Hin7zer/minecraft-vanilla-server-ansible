@@ -1,0 +1,8 @@
+---
+- name: "[PREPARATIONS] Create system user"
+  user:
+    name: "{{ user.name }}"
+    comment: "{{ user.comment | default('default minecraft server system user', true) }}"
+    home: "{{ user.home | default('/home/' + user.name, true) }}"
+    shell: "{{ user.shell | default('/bin/bash', true) }}"
+    system: "{{ user.system | default('yes', true) }}"

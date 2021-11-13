@@ -1,0 +1,32 @@
+mc_server: 
+  version: "latest"
+  server_name: "a minecraft server" 
+  port: "25565"                     
+#mc_versioncheck_url: ""                #default https://launchermeta.mojang.com/mc/game/version_manifest.json
+
+user:
+  enable: "true"
+  name: "minecraft"
+#  group: "services"                #default user.name
+#  shell: "/bin/bash"
+#  home: "/home/"
+#  system: "yes"
+#  comment: "comment"
+
+mc_service:
+  name: "minecraft.service"
+#  dir: ""                           #with / at the end and default is /home/USERNAME/
+  create_dir: "false"
+#  file_name: ""                    #default: 'mc_vanilla_server-VERSION.jar' and latest will replace 'latest' through the date automatically
+  min_ram: "1024M"
+  max_ram: "1024M"
+service_cmd: "/run/{{ mc_service.name | default('minecraft.service', true) }}/console"
+
+req:
+  packages:
+    - "bzip2"
+    - "wget"
+    - "git"
+    - "build-essential"
+    - "openjdk-16-jdk-headless"
+

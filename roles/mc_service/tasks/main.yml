@@ -1,0 +1,19 @@
+
+- name: "[SERVICE] Template minecraft server service"
+  template:
+    src: "minecraft_vanilla.service.j2"
+    dest: "/lib/systemd/system/{{ mc_service.name | default('minecraft.service', true) }}"
+    owner: "{{ user.name }}"
+
+- name: "[SERVICE] Enable minecraft server service"
+  systemd:
+    name: "{{ mc_service.name | default('minecraft.service', true) }}"
+    enabled: yes
+
+- name: "[SERVICE] Start minecraft server service"
+  systemd:
+    name: "{{ mc_service.name | default('minecraft.service', true) }}"
+    state: started
+
+
+

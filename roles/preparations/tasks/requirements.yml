@@ -1,0 +1,5 @@
+---
+- name: "[PREPARATIONS] Install required packages"
+  package:
+    name: "{{ req.packages }}"
+    state: present

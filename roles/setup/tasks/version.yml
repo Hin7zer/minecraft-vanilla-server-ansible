@@ -1,0 +1,25 @@
+- name: "[INSTALLATION] Get list of minecraft versions"
+  uri:
+    url: "{{ mc_versioncheck_url | default('https://launchermeta.mojang.com/mc/game/version_manifest.json', true) }}"
+  register: mc_version_list
+
+- name: "[INSTALLATION] Set latest version if mc_server.version is set to 'latest'"
+  set_fact:
+    mc_version: "{{ mc_version_list.json.latest.release }}"
+  when: mc_server.version == "latest"
+
+- name: "[INSTALLATION] Get url for selected version"
+  set_fact:
+    mc_version_env: "{{ item.url }}"
+  when: item.id == mc_version
+  loop: "{{ mc_version_list.json.versions }}"
+
+- name: "[INSTALLATION] Get all information for selected version"
+  uri:
+    url: "{{ mc_version_env }}"
+  register: mc_version_info
+
+- name: "[INSTALLATION] Set download URL for version {{ mc_server.version }}"
+  set_fact:
+    mc_download_url: "{{ mc_version_info.json.downloads.server.url }}"
+

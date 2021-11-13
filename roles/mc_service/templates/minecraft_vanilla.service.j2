@@ -1,0 +1,17 @@
+
+[Unit]
+Description={{ mc_service.description | default('minecraft vanilla server', true) }} Server
+
+[Service]
+User={{ user.name }}
+Group={{ user.group | default(user.name, true) }}
+WorkingDirectory={{ mc_service.dir | default('/home/' + user.name + '/', true) }}
+ExecStart=/usr/bin/java -Xmx{{ mc_service.min_ram }} -Xms{{ mc_service.min_ram }} -jar {{ full_file_path }} nogui
+ExecStop=/bin/sh -c "echo 'save-all' > {{ service_cmd }}"
+ExecStop=/bin/sh -c "echo 'stop' > {{ service_cmd }}"
+SuccessExitStatus=143
+PrivateTmp=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target

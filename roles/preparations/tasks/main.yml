@@ -1,0 +1,12 @@
+---
+- name: "[PREPARATIONS] Include requirements.yml"
+  include_tasks: requirements.yml
+#  tags:
+- name: "[PREPARATIONS] Include system_user.yml"
+  include_tasks: system_user.yml
+  when: user.enable == "true"
+#  tags:
+- name: "[PREPARATIONS] Include create_dir.yml"
+  include_tasks: create_dir.yml
+  when: mc_service.create_dir == "true"
+#  tags:

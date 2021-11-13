@@ -1,0 +1,5 @@
+- name: "[INSTALLATION] Download minecraft server for version: {{ mc_server.version }}"
+  get_url:
+    url: "{{ mc_download_url }}"
+    dest: "{{ full_file_path | default('/home/' + user.name + '/mc_vanilla_server-' + mc_version + '.jar', true) }}"
+    mode: '0770'
